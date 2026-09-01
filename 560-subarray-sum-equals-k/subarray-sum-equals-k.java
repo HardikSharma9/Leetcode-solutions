@@ -1,13 +1,30 @@
+import java.util.HashMap;
+import java.util.Map;
+
 class Solution {
     public int subarraySum(int[] nums, int k) {
-        int count=0;
+        // Map to store prefixSum -> frequency
+        Map<Integer, Integer> prefixSumCount = new HashMap<>();
         
-        for(int i=0;i<nums.length;i++){
-            int sum=0;
-            for(int j=i;j<nums.length;j++){
-                sum+=nums[j];
-                if(sum==k)count++;
+        // Initialize with (0, 1) to handle subarrays starting from index 0
+        prefixSumCount.put(0, 1);
+        
+        int currentSum = 0;
+        int count = 0;
+        
+        for (int num : nums) {
+            // Update current prefix sum
+            currentSum += num;
+            
+            // If (currentSum - k) exists in map, add its frequency to count
+            if (prefixSumCount.containsKey(currentSum - k)) {
+                count += prefixSumCount.get(currentSum - k);
             }
-        }return count;
+            
+            // Update the map with the current prefix sum
+            prefixSumCount.put(currentSum, prefixSumCount.getOrDefault(currentSum, 0) + 1);
+        }
+        
+        return count;
     }
 }
