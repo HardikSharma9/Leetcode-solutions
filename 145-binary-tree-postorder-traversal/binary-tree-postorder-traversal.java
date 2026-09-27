@@ -1,5 +1,5 @@
 /**
- * Definition for a binary tree root.
+ * Definition for a binary tree node.
  * public class TreeNode {
  *     int val;
  *     TreeNode left;
@@ -15,24 +15,30 @@
  */
 class Solution {
     public List<Integer> postorderTraversal(TreeNode root) {
-         List<Integer> postorder=new ArrayList<Integer>();
-      if(root==null)return postorder;
-     Stack<TreeNode> st1=new Stack<TreeNode>();
-     Stack<TreeNode> st2=new Stack<TreeNode>();
-     
-     st1.push(root);
-     
-     while(!st1.isEmpty()){
+        List<Integer> res=new ArrayList<Integer>();
+        Stack<TreeNode> stack=new Stack<TreeNode>();
+
+        TreeNode node =root;
       
-                root=st1.pop();
-                st2.push(root);
-                if(root.left!=null)st1.push(root.left);
-                if(root.right!=null)st1.push(root.right); 
+        while(node!=null || !stack.isEmpty()){
+            //move to left
+            while(node!=null){
+                stack.push(node);
+                node=node.left;}
+                //Move to right
+
+                if(stack.peek().right!=null){
+                    node=stack.peek().right;
+                }else{
+                    TreeNode temp =stack.pop();
+                    res.add(temp.val);
+                    while(!stack.isEmpty() && temp==stack.peek().right){
+                        temp=stack.pop();
+                        res.add(temp.val);
+                    }
+                }
             
         }
-    while(!st2.isEmpty()){
-        postorder.add(st2.pop().val);
-    }    
-     return postorder;
+        return res;
     }
 }
