@@ -1,17 +1,13 @@
 class Solution {
     public int missingNumber(int[] nums) {
-        int n = nums.length;
-
-        for (int i = 0; i <= n; i++) {          // candidate number
-            boolean found = false;
-            for (int num : nums) {              // search in array
-                if (num == i) {
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) return i;               // this one is missing
+        Set<Integer> seen = new HashSet<>();
+        for (int num : nums) {
+            seen.add(num);
         }
-        return -1; // never reached
+
+        for (int i = 0; i <= nums.length; i++) {
+            if (!seen.contains(i)) return i;
+        }
+        return -1;
     }
 }
