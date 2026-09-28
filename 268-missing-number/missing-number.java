@@ -1,13 +1,12 @@
 class Solution {
     public int missingNumber(int[] nums) {
-        Set<Integer> seen = new HashSet<>();
-        for (int num : nums) {
-            seen.add(num);
-        }
+        int n = nums.length;
+        int expected = n * (n + 1) / 2;
+        int actual = 0;
 
-        for (int i = 0; i <= nums.length; i++) {
-            if (!seen.contains(i)) return i;
+        for (int num : nums) {
+            actual += num;
         }
-        return -1;
+        return expected - actual;
     }
 }
