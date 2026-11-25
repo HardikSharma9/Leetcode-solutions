@@ -1,14 +1,15 @@
-class Solution {
-    public int removeDuplicates(int[] nums) {
-        int count=1;
-        int i=0;int j=0;
-       while(i<nums.length-1 && j<nums.length){
-        if(nums[i]==nums[j])j++;
-        else{
-            count++;
-            nums[i+1]=nums[j];
+class Solution{
+
+
+public int removeDuplicates(int[] nums) {
+    if (nums.length == 0) return 0;
+    int i = 0;                 // position of last unique element
+    for (int j = 1; j < nums.length; j++) {
+        if (nums[j] != nums[i]) {
             i++;
+            nums[i] = nums[j];
         }
-        
-       } return count;
-}}
+    }
+    return i + 1;              // length of unique part
+}
+}
